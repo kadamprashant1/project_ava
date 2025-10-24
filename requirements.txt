@@ -1,0 +1,5 @@
+selenium
+beautifulsoup4
+ollama
+Pillow
+# pytesseract is optional
