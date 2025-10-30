@@ -1,15 +1,33 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
+import Chat from './components/Chat';
 
 function App() {
-    const [url, setUrl] = useState('https://www.google.com');
-    const [prompt, setPrompt] = useState('');
-    const [messages, setMessages] = useState([]);
 
-    const handleUrlChange = (event) => {
-        if (event.key === 'Enter') {
-            setUrl(event.target.value);
+    const addTab = () => {
+        const newTab = {
+            id: nextTabId,
+            url: 'https://duckduckgo.com',
+            title: 'New Tab'
+        };
+        setTabs([...tabs, newTab]);
+        setActiveTabId(nextTabId);
+        setNextTabId(nextTabId + 1);
+    };
+
+    const closeTab = (tabId) => {
+        if (tabs.length === 1) {
+            addTab();
         }
+        const newTabs = tabs.filter(tab => tab.id !== tabId);
+        setTabs(newTabs);
+        if (activeTabId === tabId) {
+            setActiveTabId(newTabs[newTabs.length - 1].id);
+        }
+    };
+
+    const handleTabClick = (tabId) => {
+        setActiveTabId(tabId);
     };
 
     const handlePromptChange = (event) => {
@@ -40,29 +58,10 @@ function App() {
 
     return (
         <div className="app-container">
-            <div className="main-content">
-                <div className="address-bar">
-                    <input type="text" placeholder="Enter URL or search..." onKeyDown={handleUrlChange} />
-                </div>
-                <div className="webview-container">
-                    <webview id="webview" src={url}></webview>
-                </div>
-            </div>
-            <div className="chat-panel">
-                <div className="chat-messages">
-                    {messages.map((message, index) => (
-                        <div key={index} className={`message ${message.type}`}>
-                            {message.text}
-                        </div>
-                    ))}
-                </div>
-                <div className="chat-input">
-                    <input type="text" placeholder="Ask the agent..." value={prompt} onChange={handlePromptChange} />
-                    <button onClick={handleSendPrompt}>Send</button>
-                </div>
-            </div>
+            <Chat />
         </div>
     );
 }
 
-ReactDOM.render(<App />, document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);

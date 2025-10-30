@@ -3,15 +3,22 @@ const path = require('path');
 
 function createWindow () {
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1200,
+    height: 800,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-      webviewTag: true
+      nodeIntegration: true,
+      contextIsolation: false,
+      webviewTag: true,
+      webSecurity: true,
+      sandbox: false,
+      allowRunningInsecureContent: true
     }
   });
 
-  mainWindow.loadFile('app/renderer/index.html');
+  mainWindow.loadFile(path.join(__dirname, 'renderer/index.html'));
+  
+  // Open DevTools in development
+  mainWindow.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {
