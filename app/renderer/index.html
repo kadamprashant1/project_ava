@@ -2,11 +2,13 @@
 <html>
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: http://localhost:* 'unsafe-inline' 'unsafe-eval'; connect-src 'self' http://localhost:* ws://localhost:*; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com">
     <title>Agentic Browser</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div id="root"></div>
-    <script src="index.jsx"></script>
+    <script>window.React = require('react'); window.ReactDOM = require('react-dom');</script>
+    <script src="build/index.js"></script>
 </body>
 </html>

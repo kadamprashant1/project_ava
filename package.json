@@ -4,17 +4,22 @@
   "description": "An agentic web browser using Electron, React, and FastAPI.",
   "main": "app/main.js",
   "scripts": {
-    "start": "electron ."
+    "build": "esbuild app/renderer/index.jsx --bundle --outfile=app/renderer/build/index.js --platform=browser --loader:.js=jsx --external:react --external:react-dom",
+    "start": "npm run build && electron .",
+    "dev": "npm run build -- --watch"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "electron": "^28.0.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.28.5",
+    "@babel/preset-react": "^7.28.5",
+    "esbuild": "^0.25.11",
     "tailwindcss": "^3.3.5"
   }
 }
